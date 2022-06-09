@@ -1,7 +1,11 @@
 const express = require('express');
 const router = express.Router();
 
-const { joiContactSchema } = require('../../models/contact/joiSchema');
+const {
+  joiContactSchema,
+  joiFavoriteUpdateSchema,
+} = require('../../models/contact/joiSchema');
+
 const { ctrlWrapper, validate } = require('../../middlewares');
 const { contacts } = require('../../controllers/');
 
@@ -17,6 +21,12 @@ router.put(
   '/:contactId',
   validate(joiContactSchema),
   ctrlWrapper(contacts.update),
+);
+
+router.patch(
+  '/:contactId/favorite',
+  validate(joiFavoriteUpdateSchema),
+  ctrlWrapper(contacts.updateStatusContact),
 );
 
 module.exports = router;

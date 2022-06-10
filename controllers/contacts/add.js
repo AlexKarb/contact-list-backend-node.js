@@ -1,9 +1,8 @@
 const { NotFound } = require('http-errors');
-const { v4 } = require('uuid');
-const contactOperation = require('../../models/contacts');
+const { Contact } = require('../../models/contact');
 
-const add = async (req, res) => {
-  const result = await contactOperation.addContact({ ...req.body, id: v4() });
+const add = async ({ body }, res) => {
+  const result = await Contact.create(body);
 
   if (!result) {
     throw new NotFound('Not found');

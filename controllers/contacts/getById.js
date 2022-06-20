@@ -1,12 +1,16 @@
 const { NotFound } = require('http-errors');
 const { Contact } = require('../../models/contact');
 
-const getById = async ({ params: { contactId } }, res) => {
-  const result = await Contact.findById(contactId);
+const getById = async ({ user, params }, res, next) => {
+  const { _id: owner } = user;
+  const { contactId: _id } = params;
 
-  if (!result) {
-    throw new NotFound('Not found');
-  }
+  const result = await Contact.findOne({ _id, owner }).populate(
+    'owner',
+    'email subscription',
+  );
+
+  if (!result) next(new NotFound('Not found'));
 
   res.json(result);
 };

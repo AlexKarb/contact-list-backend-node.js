@@ -1,12 +1,10 @@
 const { NotFound } = require('http-errors');
 const { Contact } = require('../../models/contact');
 
-const add = async ({ body }, res) => {
-  const result = await Contact.create(body);
+const add = async ({ body: userData, user: { _id: owner } }, res, next) => {
+  const result = await Contact.create({ ...userData, owner });
 
-  if (!result) {
-    throw new NotFound('Not found');
-  }
+  if (!result) next(new NotFound('Not found'));
 
   res.status(201).json(result);
 };

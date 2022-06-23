@@ -7,7 +7,7 @@ const add = async (req, res, next) => {
   const user = await User.findOne({ email });
   if (user) next(new Conflict('Email in use'));
 
-  const newUser = new User(dataOfUser);
+  const newUser = new User({ email, ...dataOfUser });
   await newUser.setPassword(password);
   await User.create(newUser);
 

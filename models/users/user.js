@@ -3,6 +3,7 @@ const { SECRET_KEY } = process.env;
 
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
+const gravatar = require('gravatar');
 const saltRounds = 10;
 
 const userSchema = Schema(
@@ -15,6 +16,11 @@ const userSchema = Schema(
       type: String,
       required: [true, 'Email is required'],
       unique: true,
+    },
+    avatarURL: {
+      type: String,
+      required: [true, 'Avatar is required'],
+      default: gravatar.url(this.email, { protocol: 'https', s: '300' }),
     },
     subscription: {
       type: String,

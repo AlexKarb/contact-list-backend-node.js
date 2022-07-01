@@ -1,5 +1,11 @@
 const Joi = require('joi');
 
+const verify = Joi.object({
+  email: Joi.string().required().messages({
+    'any.required': 'missing required field email',
+  }),
+});
+
 const signup = Joi.object({
   password: Joi.string().min(6).max(12).required().messages({
     'any.required': 'Password is required',
@@ -25,4 +31,4 @@ const changeSubscr = Joi.object({
   }),
 });
 
-module.exports = { signup, login, changeSubscr };
+module.exports = { verify, signup, login, changeSubscr };

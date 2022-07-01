@@ -9,6 +9,11 @@ const {
   upload,
 } = require('../../middlewares');
 const { users } = require('../../controllers');
+const { verify } = require('../../controllers/users');
+
+router.get('/verify/:verificationToken', ctrlWrapper(verify.send));
+
+router.post('/verify/', validate(joiSchema.verify), ctrlWrapper(verify.resend));
 
 router.post('/signup', validate(joiSchema.signup), ctrlWrapper(users.add));
 

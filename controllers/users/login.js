@@ -1,9 +1,14 @@
 const { User } = require('../../models/users');
-const { Unauthorized } = require('http-errors');
+const { Unauthorized, Forbidden } = require('http-errors');
+const { sendMail } = require('../../service');
 
 const login = async ({ body: { email, password } }, res) => {
   const userInDb = await User.findOne({ email });
   const passwordIsValid = await userInDb?.validPassword(password);
+
+  if (userInDb && !userInDb.verify) {
+    throw new Forbidden('Email not verify');
+  }
 
   if (!userInDb || !passwordIsValid) {
     throw new Unauthorized('Email or password is wrong');

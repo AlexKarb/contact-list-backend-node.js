@@ -4,8 +4,8 @@ const { Unauthorized } = require('http-errors');
 const { SECRET_KEY } = process.env;
 
 const checkAuth = async (req, res, next) => {
-  const { authorization } = req.headers;
-  const [bearer, token] = authorization.split(' ');
+  const { authorization = '' } = req.headers;
+  const [bearer, token] = authorization?.split(' ');
 
   if (bearer !== 'Bearer' || !token) {
     next(new Unauthorized('Not authorized'));

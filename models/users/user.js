@@ -17,6 +17,10 @@ const userSchema = Schema(
       required: [true, 'Email is required'],
       unique: true,
     },
+    name: {
+      type: String,
+      required: [true, 'Email is required'],
+    },
     avatarURL: {
       type: String,
       required: [true, 'Avatar is required'],

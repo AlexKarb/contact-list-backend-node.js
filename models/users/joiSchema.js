@@ -13,6 +13,9 @@ const signup = Joi.object({
   email: Joi.string().required().messages({
     'any.required': 'Email is required',
   }),
+  name: Joi.string().required().messages({
+    'any.required': 'Name is required',
+  }),
   subscription: Joi.string().valid('starter', 'pro', 'business'),
 });
 
